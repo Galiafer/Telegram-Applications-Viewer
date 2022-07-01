@@ -1,3 +1,3 @@
-BOT_TOKEN = "5457176854:AAFmnMOqa3UEBSbaxShuQcVRn157WL6BIHk"
-LINK_TO_CHAT = "https://t.me/+te8WEONzXrJmMDAy"
-MODERATOR_ID = 586901167
+BOT_TOKEN = "токен_бота" # токен от https://t.me/BotFather
+LINK_TO_CHAT = "ссылка_на_ваш_чат"
+MODERATOR_ID = 586901123 # user_id пользователя который будет Принимать/Отклонять заявку
