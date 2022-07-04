@@ -1,1 +1,2 @@
-aiogram
+aiogram~=2.19
+PyMySQL~=1.0.2
