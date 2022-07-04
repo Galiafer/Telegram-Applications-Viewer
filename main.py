@@ -66,6 +66,7 @@ def get_admin_keyboard(add_back_button: bool = False):
     if add_back_button:
         keyboard_.add(InlineKeyboardButton(text=f"🔙 Назад", callback_data="back"))
 
+    return keyboard_
 
 @dp.message_handler(commands=["start"])
 async def start(message: types.Message):
@@ -133,7 +134,7 @@ async def send_application_state(message: types.Message, state: FSMContext):
     keyboard_admin = InlineKeyboardMarkup(row_width=2, inline_keyboard=[
         [
             InlineKeyboardButton(f"✅ Принять", callback_data=f"accept_application_{message.from_user.id}"),
-            InlineKeyboardButton(f"❌ 'Отказать", callback_data=f"decline_application_{message.from_user.id}")
+            InlineKeyboardButton(f"❌ Отказать", callback_data=f"decline_application_{message.from_user.id}")
         ]
     ])
     await bot.send_message(chat_id=ADMIN_ID, text=text, reply_markup=keyboard_admin, parse_mode=DEFAULT_PARSE_MODE)
@@ -196,7 +197,7 @@ async def settings(message: types.Message):
             await message.reply(text=f"💤 {hbold('Иницилизирую проект')}", parse_mode=DEFAULT_PARSE_MODE)
             cursor.execute(
                 "INSERT INTO `project`(creator_id, total_users, pending_users, declined_users, accepted_users) VALUES (%s, %s, %s, %s, %s);",
-                (message.from_user.id, 0, 0, 0))
+                (message.from_user.id, 0, 0, 0, 0))
             connection.commit()
         cursor.execute(f"SELECT * FROM `project` WHERE creator_id = {message.from_user.id};")
         project = dict(cursor.fetchone())
@@ -206,7 +207,7 @@ async def settings(message: types.Message):
                f"⬜ {hbold('Ссылка на поддержку')}: {project['support_link'] if project['support_link'] is not None else 'Не установлено'}\n" \
                f"⬜ {hbold('Ссылка на инфо-канал')}: {project['info_channel_link'] if project['info_channel_link'] is not None else 'Не установлено'}\n"
 
-        await message.reply(text=text, reply_markup=get_admin_keyboard(True), parse_mode=DEFAULT_PARSE_MODE)
+        await message.reply(text=text, reply_markup=get_admin_keyboard(), parse_mode=DEFAULT_PARSE_MODE)
 
 
 @dp.callback_query_handler(text="change_name")
@@ -226,7 +227,7 @@ async def change_name_state(message: types.Message, state: FSMContext):
     # cursor.execute(
     connection.commit()
     text = f"✅ {hbold('Новое название было установлено')}: {new_name}"
-    await message.reply(text=text, reply_markup=get_admin_keyboard(), parse_mode=DEFAULT_PARSE_MODE)
+    await message.reply(text=text, reply_markup=get_admin_keyboard(True), parse_mode=DEFAULT_PARSE_MODE)
     await state.finish()
 
 
@@ -246,7 +247,7 @@ async def change_chat_link_state(message: types.Message, state: FSMContext):
     cursor.execute(f"UPDATE `project` SET chat_link = '{new_chat_link}' WHERE creator_id = {message.from_user.id};")
     connection.commit()
     text = f"✅ {hbold('Новая ссылка на чат была установлена')}: {new_chat_link}"
-    await message.reply(text=text, reply_markup=get_admin_keyboard(), parse_mode=DEFAULT_PARSE_MODE)
+    await message.reply(text=text, reply_markup=get_admin_keyboard(True), parse_mode=DEFAULT_PARSE_MODE)
     await state.finish()
 
 
@@ -267,7 +268,7 @@ async def change_name_state(message: types.Message, state: FSMContext):
         f"UPDATE `project` SET support_link = '{new_support_link}' WHERE creator_id = {message.from_user.id};")
     connection.commit()
     text = f"✅ {hbold('Новое название было установлено')}: {new_support_link}"
-    await message.reply(text=text, reply_markup=get_admin_keyboard(), parse_mode=DEFAULT_PARSE_MODE)
+    await message.reply(text=text, reply_markup=get_admin_keyboard(True), parse_mode=DEFAULT_PARSE_MODE)
     await state.finish()
 
 
@@ -288,7 +289,7 @@ async def change_name_state(message: types.Message, state: FSMContext):
         f"UPDATE `project` SET info_channel_link = '{new_info_channel_link}' WHERE creator_id = {message.from_user.id};")
     connection.commit()
     text = f"✅ {hbold('Новое название было установлено')}: {new_info_channel_link}"
-    await message.reply(text=text, reply_markup=get_admin_keyboard(), parse_mode=DEFAULT_PARSE_MODE)
+    await message.reply(text=text, reply_markup=get_admin_keyboard(True), parse_mode=DEFAULT_PARSE_MODE)
     await state.finish()
 
 
@@ -302,7 +303,7 @@ async def back(callback_data: types.CallbackQuery):
            f"{hbold('Ссылка на поддержку')}: {project['support_link'] if project['support_link'] is not None else 'Не установлено'}\n⬜ " \
            f"{hbold('Ссылка на инфо-канал')}: {project['info_channel_link'] if project['info_channel_link'] is not None else 'Не установлено'}\n"
 
-    await callback_data.message.edit_text(text=text, reply_markup=get_admin_keyboard(True), parse_mode=DEFAULT_PARSE_MODE)
+    await callback_data.message.edit_text(text=text, reply_markup=get_admin_keyboard(), parse_mode=DEFAULT_PARSE_MODE)
 
 
 if __name__ == '__main__':
