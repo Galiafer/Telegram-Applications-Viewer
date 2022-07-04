@@ -87,13 +87,13 @@ async def start(message: types.Message):
             [KeyboardButton("Подать заявку")]
         ])
         await message.reply(
-            f"Добро пожаловать в {hbold(project_data['project_name'])}!!!\n\nДля подачи заявки нажмите на кнопку {hbold('`Подать заявку`')}",
+            f"Добро пожаловать в {hbold(project_data['project_name'])}!!!\n\nДля подачи заявки нажмите на кнопку {hbold('`Подать заявку`')}\n\nCreator: @dkhodos",
             reply_markup=keyboard_user, parse_mode=DEFAULT_PARSE_MODE)
     else:
         keyboard_user = ReplyKeyboardMarkup(row_width=1, resize_keyboard=True, keyboard=[
             [KeyboardButton("Показать статистику")]
         ])
-        await message.reply(f"{hbold('Добро пожаловать!!!')}", reply_markup=keyboard_user, parse_mode=DEFAULT_PARSE_MODE)
+        await message.reply(f"{hbold('Добро пожаловать!!!')}\n\nCreator: @dkhodos", reply_markup=keyboard_user, parse_mode=DEFAULT_PARSE_MODE)
 
 
 @dp.message_handler(text="Подать заявку")
