@@ -1,11 +1,11 @@
-BOT_TOKEN = "5457176854:AAFmnMOqa3UEBSbaxShuQcVRn157WL6BIHk"
-OUTPUT_CHAT = "-770795528"
-ADMIN_ID = 586901167
+BOT_TOKEN = "ТОКЕ_ОТ_BOT_FATHER" # https://t.me/BotFather
+OUTPUT_CHAT = "АЙДИ_ЧАТА" # Если установлено None (Без кавычек), то логи не будут приходить в канал
+ADMIN_ID = 586901134 # Ваш айди или айди любого другого человека, который будет редактировать бота и принимать заявки
 
-HOST = "127.0.0.1"
-PORT = 3306
-USER = "root"
-PASSWORD = "232396"
-DB_NAME = "tg_application_reviewer"
+HOST = "127.0.0.1" # Можете не трогать
+PORT = 3306 # Можете не трогать
+USER = "root" # Можете не трогать
+PASSWORD = "мой_пароль" # Ваш пароль от MySql
+DB_NAME = "tg_application_reviewer" # Название вашей бд на АНГЛИЙСКОМ
 
 DEFAULT_PARSE_MODE = "HTML"
