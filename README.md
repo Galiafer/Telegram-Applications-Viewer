@@ -1,4 +1,4 @@
-# Telegram-Request-Reviewer
+# Telegram-Request-Viewer
 Бот для просмотра заявок от пользователя
 
 # TODO:
